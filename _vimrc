@@ -16,6 +16,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'powerline/powerline'
 Plugin 'tomasr/molokai'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()           
 
@@ -33,6 +34,14 @@ set foldmethod=indent                                 "indent 折叠方式
 set ts=4
 set expandtab  "将Tab键转换为空格
 set nobackup "设置无备份文件
+set foldlevel=99 "设置默认不折叠
+set hlsearch "设置搜索高亮
+
+"----------基本设置-----------------
+set background=dark
+colorscheme molokai
+"colorscheme solarized
+syntax enable
 
 "----------键盘映射-----------------
 let mapleader = ","
@@ -40,7 +49,15 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>d dd
 inoremap <c-d> <esc>ddi
+nnoremap <leader>h <c-w>h
+nnoremap <leader>l <c-w>l
 
+"括号不全
+inoremap ( ()<esc>i
+inoremap { {}<esc>i
+inoremap [ []<esc>i
+
+"常用拼写纠正
 iabbrev adn and
 iabbrev waht what
 iabbrev tehn then
