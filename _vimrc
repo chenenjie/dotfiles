@@ -13,10 +13,8 @@ Plugin 'racer-rust/vim-racer'
 Plugin 'rust-lang/rust.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'powerline/powerline'
 Plugin 'tomasr/molokai'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()           
 
@@ -31,11 +29,12 @@ set shiftwidth=4     "换行时自动缩进宽度，可更改（宽度同tabstop
 set smarttab         "指定按一次backspace就删除shiftwidth宽度
 set foldenable                                        "启用折叠
 set foldmethod=indent                                 "indent 折叠方式
-set ts=4
 set expandtab  "将Tab键转换为空格
 set nobackup "设置无备份文件
+set noswapfile
 set foldlevel=99 "设置默认不折叠
 set hlsearch "设置搜索高亮
+
 
 "----------基本设置-----------------
 set background=dark
@@ -102,6 +101,6 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 """ 在 Insert 模式下, 敲 <leader>; 补全
 inoremap <leader>; <C-x><C-o>
 
-nnoremap <c-n> :NERDTreeToggle<CR>
+nnoremap <f3> :NERDTreeToggle<CR>
 
 
