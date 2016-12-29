@@ -31,7 +31,6 @@ set shiftwidth=4     "换行时自动缩进宽度，可更改（宽度同tabstop
 set smarttab         "指定按一次backspace就删除shiftwidth宽度
 set foldenable                                        "启用折叠
 set foldmethod=indent                                 "indent 折叠方式
-set ts=4
 set expandtab  "将Tab键转换为空格
 set nobackup "设置无备份文件
 set foldlevel=99 "设置默认不折叠
