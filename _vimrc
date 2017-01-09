@@ -1,7 +1,7 @@
 "echom ">^.^<"
 
-set nocompatible             
-filetype off 
+set nocompatible
+filetype off
 
 "此处规定Vundle的路径
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -15,8 +15,9 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tomasr/molokai'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'cespare/vim-toml'
 
-call vundle#end()           
+call vundle#end()
 
 filetype on "启用文件类型侦测
 filetype plugin on  "针对不同的文件类型加载对应的插件
@@ -35,12 +36,21 @@ set noswapfile
 set foldlevel=99 "设置默认不折叠
 set hlsearch "设置搜索高亮
 
+set mouse=a "启用鼠标
+set t_Co=256 "终端启用256色
+set backspace=2 "设置退格键可用
+
+set encoding=utf-8 "设置内部编码
+set fileencoding=utf-8
+"set fileencodings
+
 
 "----------基本设置-----------------
 set background=dark
 colorscheme molokai
 "colorscheme solarized
 syntax enable
+
 
 "----------键盘映射-----------------
 let mapleader = ","
@@ -79,6 +89,14 @@ augroup END
 onoremap b /return<cr>
 onoremap in( :<c-u>normal! f(vi(<cr>
 onoremap ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
+
+" 常规模式下输入 cS 清除行尾空格
+nmap cS :%s/\s\+$//g<CR>:noh<CR>
+"
+" " 常规模式下输入 cM 清除行尾 ^M 符号
+nmap cM :%s/\r$//g<CR>:noh<CR>
+
+
 
 "----------状态条-------------------
 set statusline=%f
