@@ -48,8 +48,8 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>d dd
 inoremap <c-d> <esc>ddi
-nnoremap <leader>h <c-w>h
-nnoremap <leader>l <c-w>l
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
 
 "括号不全
 inoremap ( ()<esc>i
@@ -100,6 +100,8 @@ let g:rustfmt_autosave = 1
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 """ 在 Insert 模式下, 敲 <leader>; 补全
 inoremap <leader>; <C-x><C-o>
+nnoremap <leader>z <C-w>h
+nnoremap <leader>x <C-w>l
 
 nnoremap <f3> :NERDTreeToggle<CR>
 
