@@ -61,6 +61,8 @@ inoremap <c-d> <esc>ddi
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
+
+
 "括号不全
 inoremap ( ()<esc>i
 inoremap { {}<esc>i
@@ -95,7 +97,7 @@ nmap cS :%s/\s\+$//g<CR>:noh<CR>
 "
 " " 常规模式下输入 cM 清除行尾 ^M 符号
 nmap cM :%s/\r$//g<CR>:noh<CR>
-
+nnoremap "0p <leader>p
 
 
 "----------状态条-------------------
