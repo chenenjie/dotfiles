@@ -16,6 +16,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tomasr/molokai'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'cespare/vim-toml'
+Plugin 'Shougo/unite.vim'
 
 call vundle#end()
 
@@ -35,6 +36,7 @@ set nobackup "设置无备份文件
 set noswapfile
 set foldlevel=99 "设置默认不折叠
 set hlsearch "设置搜索高亮
+set nowrap "设置不折叠行
 
 set mouse=a "启用鼠标
 set t_Co=256 "终端启用256色
@@ -110,10 +112,12 @@ set statusline+=%l
 set statusline+=/
 set statusline+=%L
 
+"----------unite.vim配置------------
+nnoremap <C-l> :Unite buffer file file_rec<CR>
 
 "----------rust配置-----------------
 ""开启rust的自动reformat的功能
-let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 0
 ""手动补全和定义跳转
 
 """ 在normal 模式下, 敲 <leader>jd 跳转到定义或声明(支持跨文件)
