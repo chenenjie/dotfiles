@@ -17,6 +17,26 @@ Plugin 'tomasr/molokai'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'cespare/vim-toml'
 Plugin 'Shougo/unite.vim'
+Plugin 'tpope/vim-fugitive' "git管理工具
+Plugin 'mattn/webapi-vim'  "一些网址的高亮现
+Plugin 'luochen1990/rainbow' "括号层次不同颜色现实
+Plugin 'godlygeek/tabular'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+Plugin 'rhysd/conflict-marker.vim'  "git pull 冲突高亮现实
+Plugin 'jiangmiao/auto-pairs'       "括号自动匹配
+Plugin 'terryma/vim-multiple-cursors'  "多个光标操作
+Plugin 'vim-scripts/sessionman.vim'  "让vim有session
+Plugin 'Lokaltog/powerline'       "漂亮的状态栏
+Plugin 'powerline/fonts'         "自体
+Plugin 'bling/vim-bufferline'    "状态栏现实缓冲区
+Plugin 'easymotion/vim-easymotion'  "vim更好的移动方式
+Plugin 'mbbill/undotree'           "显示回退的树桩图
+Plugin 'flazz/vim-colorschemes'     "可以选择配色
+Plugin 'mhinz/vim-signify'         
+Plugin 'tpope/vim-abolish.git'
+Plugin 'osyo-manga/vim-over'     "将vim的命令行改成shell类似的
+Plugin 'gcmt/wildfire.vim'       "要括号外的括号进攻
 
 call vundle#end()
 
@@ -60,15 +80,8 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>d dd
 inoremap <c-d> <esc>ddi
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
 
 
-
-"括号不全
-inoremap ( ()<esc>i
-inoremap { {}<esc>i
-inoremap [ []<esc>i
 
 "常用拼写纠正
 iabbrev adn and
@@ -129,4 +142,4 @@ nnoremap <leader>x <C-w>l
 
 nnoremap <f3> :NERDTreeToggle<CR>
 
-
+nnoremap <leader><F12> :PluginInstall!<CR>
