@@ -13,21 +13,21 @@ Plugin 'racer-rust/vim-racer'
 Plugin 'rust-lang/rust.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'tomasr/molokai'
+Plugin   'tomasr/molokai'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'cespare/vim-toml'
 Plugin 'Shougo/unite.vim'
 Plugin 'tpope/vim-fugitive' "git管理工具
 Plugin 'mattn/webapi-vim'  "一些网址的高亮现
-Plugin 'luochen1990/rainbow' "括号层次不同颜色现实
-Plugin 'godlygeek/tabular'
+Plugin 'luochen1990/rainbow' "-括号层次不同颜色现实
+Plugin 'godlygeek/tabular'   "-类似格式化"
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'rhysd/conflict-marker.vim'  "git pull 冲突高亮现实
 Plugin 'jiangmiao/auto-pairs'       "括号自动匹配
 Plugin 'terryma/vim-multiple-cursors'  "多个光标操作
 Plugin 'vim-scripts/sessionman.vim'  "让vim有session
-Plugin 'Lokaltog/powerline'       "漂亮的状态栏
+"Plugin 'Lokaltog/powerline'       "漂亮的状态栏
 Plugin 'powerline/fonts'         "自体
 Plugin 'bling/vim-bufferline'    "状态栏现实缓冲区
 Plugin 'easymotion/vim-easymotion'  "vim更好的移动方式
@@ -57,6 +57,7 @@ set noswapfile
 set foldlevel=99 "设置默认不折叠
 set hlsearch "设置搜索高亮
 set nowrap "设置不折叠行
+set history=1000
 
 set mouse=a "启用鼠标
 set t_Co=256 "终端启用256色
@@ -143,3 +144,12 @@ nnoremap <leader>x <C-w>l
 nnoremap <f3> :NERDTreeToggle<CR>
 
 nnoremap <leader><F12> :PluginInstall!<CR>
+
+
+"----------powerline配置------------------------
+"let g:Powerline_symbols = 'fancy'
+
+
+"----------rainbow配置------------------------
+let g:rainbow_active = 1
+
