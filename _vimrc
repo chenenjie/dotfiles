@@ -3,8 +3,20 @@
 set nocompatible
 filetype off
 
+
+silent function! OSX()
+    return has('macunix')
+endfunction
+silent function! LINUX()
+    return has('unix') && !has('macunix') && !has('win32unix')
+endfunction
+silent function! WINDOWS()
+    return  (has('win32') || has('win64'))
+endfunction
+
+set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
 "此处规定Vundle的路径
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/Vundle.vim/
 
 call vundle#begin()
 
@@ -13,21 +25,25 @@ Plugin 'racer-rust/vim-racer'
 Plugin 'rust-lang/rust.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin   'tomasr/molokai'
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'tomasr/molokai'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'cespare/vim-toml'
 Plugin 'Shougo/unite.vim'
-Plugin 'tpope/vim-fugitive' "git管理工具
-Plugin 'mattn/webapi-vim'  "一些网址的高亮现
+Plugin 'tpope/vim-fugitive' "-git管理工具
+Plugin 'mattn/webapi-vim'  "-些网址的高亮现
 Plugin 'luochen1990/rainbow' "-括号层次不同颜色现实
 Plugin 'godlygeek/tabular'   "-类似格式化"
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'  "-在选择文本外围设置操作"
+Plugin 'tpope/vim-repeat'    "-重复插件的操作"
 Plugin 'rhysd/conflict-marker.vim'  "git pull 冲突高亮现实
-Plugin 'jiangmiao/auto-pairs'       "括号自动匹配
-Plugin 'terryma/vim-multiple-cursors'  "多个光标操作
+Plugin 'jiangmiao/auto-pairs'       "-括号自动匹配
+Plugin 'terryma/vim-multiple-cursors'  "-多个光标操作
 Plugin 'vim-scripts/sessionman.vim'  "让vim有session
 "Plugin 'Lokaltog/powerline'       "漂亮的状态栏
+Plugin 'vim-airline/vim-airline'       "-漂亮的状态栏
+Plugin 'vim-airline/vim-airline-themes'       "-漂亮的状态栏主题
+
 Plugin 'powerline/fonts'         "自体
 Plugin 'bling/vim-bufferline'    "状态栏现实缓冲区
 Plugin 'easymotion/vim-easymotion'  "vim更好的移动方式
@@ -37,6 +53,7 @@ Plugin 'mhinz/vim-signify'
 Plugin 'tpope/vim-abolish.git'
 Plugin 'osyo-manga/vim-over'     "将vim的命令行改成shell类似的
 Plugin 'gcmt/wildfire.vim'       "要括号外的括号进攻
+
 
 call vundle#end()
 
@@ -59,17 +76,37 @@ set hlsearch "设置搜索高亮
 set nowrap "设置不折叠行
 set history=1000
 
-set mouse=a "启用鼠标
 set t_Co=256 "终端启用256色
 set backspace=2 "设置退格键可用
 
+"------------- 补全设置 ---------------- 
+set wildmenu
+set wildmode=list:longest,full
+
+"------------- 鼠标设置 ---------------- 
+set mouse=a "启用鼠标
+set mousehide "在打字的时候隐藏鼠标j"
+
+"------------- 编码设置 ----------------" 
 set encoding=utf-8 "设置内部编码
 set fileencoding=utf-8
 "set fileencodings
 
 
 "----------基本设置-----------------
-set background=dark
+set background=dark         " Assume a dark background
+
+" Allow to trigger background
+function! ToggleBG()
+    let s:tbg = &background
+    " Inversion
+    if s:tbg == "dark"
+        set background=light
+    else
+        set background=dark
+    endif
+endfunction
+noremap <leader>bg :call ToggleBG()<CR>
 colorscheme molokai
 "colorscheme solarized
 syntax enable
@@ -90,6 +127,7 @@ iabbrev waht what
 iabbrev tehn then
 iabbrev @@ chenenjiejiang@gmail.com
 iabbrev ccopy Copyright 2016 chenenjie,all right reserved.
+iabbrev -- "-------------  ----------------
 
 "给选定的字段加上双引号(有问题)
 vnoremap <leader>" xi"<esc>pa"<esc>
@@ -117,17 +155,17 @@ nnoremap "0p <leader>p
 
 
 "----------状态条-------------------
-set statusline=%f
-set statusline+=\ --
-set statusline+=type:
-set statusline+=%y
-set statusline+=%=
-set statusline+=%l
-set statusline+=/
-set statusline+=%L
+"set statusline=%f
+"set statusline+=\ --
+"set statusline+=type:
+"set statusline+=%y
+"set statusline+=%=
+"set statusline+=%l
+"set statusline+=/
+"set statusline+=%L
 
 "----------unite.vim配置------------
-nnoremap <C-l> :Unite buffer file file_rec<CR>
+nnoremap <C-l> :Unite buffer file <CR>
 
 "----------rust配置-----------------
 ""开启rust的自动reformat的功能
@@ -141,15 +179,28 @@ inoremap <leader>; <C-x><C-o>
 nnoremap <leader>z <C-w>h
 nnoremap <leader>x <C-w>l
 
+"------------- nerdtree文件树插件 ---------------- 
 nnoremap <f3> :NERDTreeToggle<CR>
+"如果只剩下文件树自动退出
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+"------------- vundle插件管理插件 ---------------- 
 nnoremap <leader><F12> :PluginInstall!<CR>
-
-
-"----------powerline配置------------------------
-"let g:Powerline_symbols = 'fancy'
 
 
 "----------rainbow配置------------------------
 let g:rainbow_active = 1
+nnoremap <leader>c( :RainbowToggle<CR>
 
+
+"------------- airline配置 ---------------- 
+let g:airline_theme = 'tomorrow'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#symbol = '!'
+
+"------------- sessionman工作区配置 ---------------- 
+nmap <leader>sl :SessionList<CR>
+nmap <leader>ss :SessionSave<CR>
+nmap <leader>sc :SessionClose<CR>
