@@ -14,7 +14,9 @@ silent function! WINDOWS()
     return  (has('win32') || has('win64'))
 endfunction
 
-set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+if WINDOWS()
+    set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+endif
 "此处规定Vundle的路径
 set rtp+=~/.vim/bundle/Vundle.vim/
 
@@ -153,7 +155,20 @@ nmap cS :%s/\s\+$//g<CR>:noh<CR>
 nmap cM :%s/\r$//g<CR>:noh<CR>
 nnoremap "0p <leader>p
 
+vnoremap < <gv
+vnoremap > >gv
 
+"find merge conflict markers
+map <leader>fc /\v^[<\|=>]{7}(.*\|$)<CR>
+
+cmap cwd lcd %:p:h
+cmap cd. lcd %:p:h
+
+"vnoremap . :normal .<CR>
+map zl zL
+map zh zH
+
+nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 "----------状态条-------------------
 "set statusline=%f
 "set statusline+=\ --
@@ -182,7 +197,9 @@ nnoremap <leader>x <C-w>l
 "------------- nerdtree文件树插件 ---------------- 
 nnoremap <f3> :NERDTreeToggle<CR>
 "如果只剩下文件树自动退出
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup nerdtree_command
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup end
 
 "------------- vundle插件管理插件 ---------------- 
 nnoremap <leader><F12> :PluginInstall!<CR>
