@@ -55,6 +55,7 @@ Plugin 'mhinz/vim-signify'
 Plugin 'tpope/vim-abolish.git'
 Plugin 'osyo-manga/vim-over'     "将vim的命令行改成shell类似的
 Plugin 'gcmt/wildfire.vim'       "要括号外的括号进攻
+Plugin 'altercation/vim-colors-solarized'
 
 
 call vundle#end()
@@ -63,6 +64,8 @@ filetype on "启用文件类型侦测
 filetype plugin on  "针对不同的文件类型加载对应的插件
 filetype plugin indent on   "启用缩进
 
+set shortmess=atI "去掉欢迎页面
+set cursorline "突出显示当前行
 set number "设置行号
 set smartindent   "启用智能对齐方式
 set tabstop=4   "设置Tab键的宽度，可以更改，如：宽度为4
@@ -81,6 +84,9 @@ set history=1000
 set t_Co=256 "终端启用256色
 set backspace=2 "设置退格键可用
 
+set hidden
+set scroll=10
+
 "------------- 补全设置 ---------------- 
 set wildmenu
 set wildmode=list:longest,full
@@ -97,6 +103,7 @@ set fileencoding=utf-8
 
 "----------基本设置-----------------
 set background=dark         " Assume a dark background
+"set background=light
 
 " Allow to trigger background
 function! ToggleBG()
@@ -109,19 +116,23 @@ function! ToggleBG()
     endif
 endfunction
 noremap <leader>bg :call ToggleBG()<CR>
-colorscheme molokai
-"colorscheme solarized
 syntax enable
+"colorscheme molokai
+"colorscheme solarized
+colorscheme desert
 
+let g:solarized_termcolors=256
 
 "----------键盘映射-----------------
 let mapleader = ","
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>d dd
 inoremap <c-d> <esc>ddi
 
-
+"------------- 切换tab  ---------------- 
+nnoremap <leader>a :tabp<cr>
+nnoremap <leader>d :tabn<cr>
+nnoremap <leader>w :tabc<cr>
 
 "常用拼写纠正
 iabbrev adn and
@@ -134,15 +145,15 @@ iabbrev -- "-------------  ----------------
 "给选定的字段加上双引号(有问题)
 vnoremap <leader>" xi"<esc>pa"<esc>
 
-augroup testgroup
-    autocmd BufWrite * :echom "Foo"
-    autocmd BufWrite * :echom "Bar"
-augroup END
+"augroup testgroup
+    "autocmd BufWrite * :echom "Foo"
+    "autocmd BufWrite * :echom "Bar"
+"augroup END
 
-augroup testgroup
-    autocmd!
-    autocmd BufWrite * :echom "Baz"
-augroup END
+"augroup testgroup
+    "autocmd!
+    "autocmd BufWrite * :echom "Baz"
+"augroup END
 
 onoremap b /return<cr>
 onoremap in( :<c-u>normal! f(vi(<cr>
@@ -164,11 +175,11 @@ map <leader>fc /\v^[<\|=>]{7}(.*\|$)<CR>
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 
-"vnoremap . :normal .<CR>
+vnoremap . :normal .<CR>
 map zl zL
 map zh zH
 
-nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+"nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 "----------状态条-------------------
 "set statusline=%f
 "set statusline+=\ --
@@ -180,7 +191,7 @@ nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<C
 "set statusline+=%L
 
 "----------unite.vim配置------------
-nnoremap <C-l> :Unite buffer file <CR>
+nnoremap <C-l> :Unite buffer file file_rec<CR>
 
 "----------rust配置-----------------
 ""开启rust的自动reformat的功能
@@ -188,7 +199,7 @@ let g:rustfmt_autosave = 0
 ""手动补全和定义跳转
 
 """ 在normal 模式下, 敲 <leader>jd 跳转到定义或声明(支持跨文件)
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>jk :YcmCompleter GoToDefinitionElseDeclaration<CR>
 """ 在 Insert 模式下, 敲 <leader>; 补全
 inoremap <leader>; <C-x><C-o>
 nnoremap <leader>z <C-w>h
@@ -201,6 +212,14 @@ augroup nerdtree_command
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup end
 
+
+
+"function! MyListener(event)
+    "echom "foj"
+"endfunction
+
+"call g:NERDTreePathNotifier.AddListener("init", "MyListener")
+
 "------------- vundle插件管理插件 ---------------- 
 nnoremap <leader><F12> :PluginInstall!<CR>
 
@@ -211,17 +230,17 @@ nnoremap <leader>c( :RainbowToggle<CR>
 
 
 "------------- airline配置 ---------------- 
-"let g:airline_powerline_fonts = 1 
+let g:airline_powerline_fonts = 1 
 
-let g:airline_theme = 'molokai'
+let g:airline_theme = 'luna'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#whitespace#symbol = '!'
 
 
-  if !exists('g:airline_symbols')
+if !exists('g:airline_symbols')
     let g:airline_symbols = {}
-  endif
+endif
 
   " unicode symbols
 let g:airline_symbols.crypt = '🔒'
@@ -235,7 +254,7 @@ let g:airline_symbols.whitespace = 'Ξ'
 
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
+let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
@@ -245,3 +264,25 @@ let g:airline_symbols.linenr = ''
 nmap <leader>sl :SessionList<CR>
 nmap <leader>ss :SessionSave<CR>
 nmap <leader>sc :SessionClose<CR>
+
+"------------- fugitive git插件的配置 ---------------- 
+if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
+    nnoremap <silent> <leader>gs :Gstatus<CR>
+    nnoremap <silent> <leader>gd :Gdiff<CR>
+    nnoremap <silent> <leader>gc :Gcommit<CR>
+    nnoremap <silent> <leader>gb :Gblame<CR>
+    nnoremap <silent> <leader>gl :Glog<CR>
+    nnoremap <silent> <leader>gp :Git push<CR>
+    nnoremap <silent> <leader>gr :Gread<CR>
+    nnoremap <silent> <leader>gw :Gwrite<CR>
+    nnoremap <silent> <leader>ge :Gedit<CR>
+    nnoremap <silent> <leader>gu :Gpull<CR>
+    " Mnemonic _i_nteractive
+    nnoremap <silent> <leader>gi :Git add -p %<CR>
+    nnoremap <silent> <leader>gg :SignifyToggle<CR> 
+endif
+
+
+"------------- nerdcommenter键---------------- 
+
+
