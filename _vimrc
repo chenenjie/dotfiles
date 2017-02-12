@@ -78,6 +78,7 @@ set nobackup "设置无备份文件
 set noswapfile
 set foldlevel=99 "设置默认不折叠
 set hlsearch "设置搜索高亮
+set ignorecase
 set nowrap "设置不折叠行
 set history=1000
 
@@ -117,9 +118,9 @@ function! ToggleBG()
 endfunction
 noremap <leader>bg :call ToggleBG()<CR>
 syntax enable
-"colorscheme molokai
+colorscheme molokai
 "colorscheme solarized
-colorscheme desert
+"colorscheme desert
 
 let g:solarized_termcolors=256
 
@@ -179,6 +180,11 @@ vnoremap . :normal .<CR>
 map zl zL
 map zh zH
 
+nnoremap <Space> :
+vnoremap <Space> :
+
+if maparg('<C-l>', 'n') ==# '' | nnoremap <silent> <C-l> :nohlsearch<CR><C-l> | endif
+
 "nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 "----------状态条-------------------
 "set statusline=%f
@@ -191,7 +197,7 @@ map zh zH
 "set statusline+=%L
 
 "----------unite.vim配置------------
-nnoremap <C-l> :Unite buffer file file_rec<CR>
+nnoremap <C-h> :Unite buffer file file_rec<CR>
 
 "----------rust配置-----------------
 ""开启rust的自动reformat的功能
@@ -283,6 +289,5 @@ if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
 endif
 
 
-"------------- nerdcommenter键---------------- 
 
 
