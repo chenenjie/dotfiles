@@ -14,9 +14,29 @@ silent function! WINDOWS()
     return  (has('win32') || has('win64'))
 endfunction
 
-if WINDOWS()
-    set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+if has('gui_running')
+    set guioptions-=T           " Remove the toolbar
+    "set lines=40                " 40 lines of text instead of 24
+    winpos 100 10                                     "指定窗口出现的位置，坐标原点在屏幕左上角
+    set lines=38 columns=120                          "指定窗口大小，lines为高度，columns为宽度
+    let g:indentLine_char = "┊"
+    let g:indentLine_first_char = "┊"
+
+    if LINUX() && has("gui_running")
+        set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
+    elseif OSX() && has("gui_running")
+        set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
+    elseif WINDOWS() && has("gui_running")
+        set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+    endif
+else
+    if &term == 'xterm' || &term == 'screen'
+        set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+    endif
+    "set term=builtin_ansi       " Make arrow and other keys work
 endif
+
+
 "此处规定Vundle的路径
 set rtp+=~/.vim/bundle/Vundle.vim/
 
@@ -56,6 +76,13 @@ Plugin 'tpope/vim-abolish.git'
 Plugin 'osyo-manga/vim-over'     "将vim的命令行改成shell类似的
 Plugin 'gcmt/wildfire.vim'       "要括号外的括号进攻
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-scripts/vim-auto-save'
+
+Plugin 'klen/python-mode'
+Plugin 'yssource/python.vim'
+Plugin 'python_match.vim'
+Plugin 'pythoncomplete'
+Plugin 'kien/ctrlp.vim'
 
 
 call vundle#end()
@@ -82,7 +109,6 @@ set ignorecase
 set nowrap "设置不折叠行
 set history=1000
 
-set t_Co=256 "终端启用256色
 set backspace=2 "设置退格键可用
 
 set hidden
@@ -208,8 +234,10 @@ let g:rustfmt_autosave = 0
 nnoremap <leader>jk :YcmCompleter GoToDefinitionElseDeclaration<CR>
 """ 在 Insert 模式下, 敲 <leader>; 补全
 inoremap <leader>; <C-x><C-o>
-nnoremap <leader>z <C-w>h
-nnoremap <leader>x <C-w>l
+nnoremap <leader>h <C-w>h
+nnoremap <leader>l <C-w>l
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
 
 "------------- nerdtree文件树插件 ---------------- 
 nnoremap <f3> :NERDTreeToggle<CR>
@@ -288,6 +316,29 @@ if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
     nnoremap <silent> <leader>gg :SignifyToggle<CR> 
 endif
 
+"------------- 设置自动保存  ---------------- 
+"let g:auto_save = 1
 
+"-------------  python mode 设置---------------- 
+augroup python_mode
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+augroup end
 
+let g:pymode_lint_checkers = ['pyflakes']
+let g:pymode_trim_whitespaces = 0
+let g:pymode_options = 0
+let g:pymode_rope = 0
 
+function! ENJIE(word)
+    let key = 'grep -n -r '.a:word." ".getcwd()
+    execute key
+endfunction
+
+function! SearchWorkspace(word)
+    let key = 'vimgrep /'.a:word.'/gj **/*.*'
+    execute key
+endfunction
+
+"-------------  全局搜索  ---------------- 
+command! -nargs=? Say call ENJIE('<args>')
+command! -nargs=1 Fuck call SearchWorkspace('<args>')
