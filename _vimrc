@@ -28,12 +28,36 @@ if has('gui_running')
         set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
     elseif WINDOWS() && has("gui_running")
         set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+
+        "source $VIMRUNTIME/delmenu.vim
+        "source $VIMRUNTIME/menu.vim
+
+        "解决consle输出乱码
+        language messages zh_CN.utf-8
     endif
 else
     if &term == 'xterm' || &term == 'screen'
         set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
     endif
     "set term=builtin_ansi       " Make arrow and other keys work
+endif
+
+if has("gui_running")
+    set guioptions-=m
+    set guioptions-=T
+    set guioptions-=r
+    set guioptions-=L
+    nmap <silent> <c-F11> :if &guioptions =~# 'm' <Bar>
+        \set guioptions-=m <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=r <Bar>
+        \set guioptions-=L <Bar>
+    \else <Bar>
+        \set guioptions+=m <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=r <Bar>
+        \set guioptions+=L <Bar>
+    \endif<CR>
 endif
 
 
@@ -43,13 +67,11 @@ set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'racer-rust/vim-racer'
-Plugin 'rust-lang/rust.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tomasr/molokai'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'cespare/vim-toml'
 Plugin 'Shougo/unite.vim'
 Plugin 'tpope/vim-fugitive' "-git管理工具
@@ -83,6 +105,9 @@ Plugin 'yssource/python.vim'
 Plugin 'python_match.vim'
 Plugin 'pythoncomplete'
 Plugin 'kien/ctrlp.vim'
+"-------------  rust plugin---------------- 
+Plugin 'racer-rust/vim-racer'
+Plugin 'rust-lang/rust.vim'
 
 
 call vundle#end()
@@ -338,6 +363,15 @@ function! SearchWorkspace(word)
     let key = 'vimgrep /'.a:word.'/gj **/*.*'
     execute key
 endfunction
+
+
+"-------------  rust mode  ---------------- 
+let g:racer_experimental_completer = 1
+
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
 "-------------  全局搜索  ---------------- 
 command! -nargs=? Say call ENJIE('<args>')
