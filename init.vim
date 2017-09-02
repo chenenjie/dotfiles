@@ -4,113 +4,65 @@ set nocompatible
 filetype off
 
 
-silent function! OSX()
-    return has('macunix')
-endfunction
-silent function! LINUX()
-    return has('unix') && !has('macunix') && !has('win32unix')
-endfunction
-silent function! WINDOWS()
-    return  (has('win32') || has('win64'))
-endfunction
 
-if has('gui_running')
-    set guioptions-=T           " Remove the toolbar
-    "set lines=40                " 40 lines of text instead of 24
-    winpos 100 10                                     "指定窗口出现的位置，坐标原点在屏幕左上角
-    set lines=38 columns=120                          "指定窗口大小，lines为高度，columns为宽度
-    let g:indentLine_char = "┊"
-    let g:indentLine_first_char = "┊"
-
-    if LINUX() && has("gui_running")
-        set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
-    elseif OSX() && has("gui_running")
-        set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
-    elseif WINDOWS() && has("gui_running")
-        set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
-
-        "source $VIMRUNTIME/delmenu.vim
-        "source $VIMRUNTIME/menu.vim
-
-        "解决consle输出乱码
-        language messages zh_CN.utf-8
-    endif
-else
-    if &term == 'xterm' || &term == 'screen'
-        set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-    endif
-    "set term=builtin_ansi       " Make arrow and other keys work
-endif
-
-if has("gui_running")
-    set guioptions-=m
-    set guioptions-=T
-    set guioptions-=r
-    set guioptions-=L
-    nmap <silent> <c-F11> :if &guioptions =~# 'm' <Bar>
-        \set guioptions-=m <Bar>
-        \set guioptions-=T <Bar>
-        \set guioptions-=r <Bar>
-        \set guioptions-=L <Bar>
-    \else <Bar>
-        \set guioptions+=m <Bar>
-        \set guioptions+=T <Bar>
-        \set guioptions+=r <Bar>
-        \set guioptions+=L <Bar>
-    \endif<CR>
-endif
-
-
+"set lines=38 columns=120                          "指定窗口大小，lines为高度，columns为宽度
 "此处规定Vundle的路径
-set rtp+=~/.vim/bundle/Vundle.vim/
+"set rtp+=~/.vim/bundle/Vundle.vim/
 
-call vundle#begin()
+"call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'tomasr/molokai'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'cespare/vim-toml'
-Plugin 'Shougo/unite.vim'
-Plugin 'tpope/vim-fugitive' "-git管理工具
-Plugin 'mattn/webapi-vim'  "-些网址的高亮现
-Plugin 'luochen1990/rainbow' "-括号层次不同颜色现实
-Plugin 'godlygeek/tabular'   "-类似格式化"
-Plugin 'tpope/vim-surround'  "-在选择文本外围设置操作"
-Plugin 'tpope/vim-repeat'    "-重复插件的操作"
-Plugin 'rhysd/conflict-marker.vim'  "git pull 冲突高亮现实
-Plugin 'jiangmiao/auto-pairs'       "-括号自动匹配
-Plugin 'terryma/vim-multiple-cursors'  "-多个光标操作
-Plugin 'vim-scripts/sessionman.vim'  "让vim有session
-"Plugin 'Lokaltog/powerline'       "漂亮的状态栏
-Plugin 'vim-airline/vim-airline'       "-漂亮的状态栏
-Plugin 'vim-airline/vim-airline-themes'       "-漂亮的状态栏主题
+"Plug 'VundleVim/Vundle.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tomasr/molokai'
+"Plug 'Valloric/YouCompleteMe'
+Plug 'cespare/vim-toml'
+"Plug 'Shougo/unite.vim'
 
-Plugin 'powerline/fonts'         "自体
-Plugin 'bling/vim-bufferline'    "状态栏现实缓冲区
-Plugin 'easymotion/vim-easymotion'  "vim更好的移动方式
-Plugin 'mbbill/undotree'           "显示回退的树桩图
-Plugin 'flazz/vim-colorschemes'     "可以选择配色
-Plugin 'mhinz/vim-signify'         
-Plugin 'tpope/vim-abolish.git'
-Plugin 'osyo-manga/vim-over'     "将vim的命令行改成shell类似的
-Plugin 'gcmt/wildfire.vim'       "要括号外的括号进攻
-Plugin 'altercation/vim-colors-solarized'
-"Plugin 'vim-scripts/vim-auto-save'
 
-Plugin 'klen/python-mode'
-Plugin 'yssource/python.vim'
-Plugin 'python_match.vim'
-Plugin 'pythoncomplete'
-"Plugin 'kien/ctrlp.vim'
+Plug 'tpope/vim-fugitive' "-git管理工具
+Plug 'mattn/webapi-vim'  "-些网址的高亮现
+Plug 'luochen1990/rainbow' "-括号层次不同颜色现实
+Plug 'godlygeek/tabular'   "-类似格式化"
+Plug 'tpope/vim-surround'  "-在选择文本外围设置操作"
+Plug 'tpope/vim-repeat'    "-重复插件的操作"
+Plug 'rhysd/conflict-marker.vim'  "git pull 冲突高亮现实
+Plug 'jiangmiao/auto-pairs'       "-括号自动匹配
+Plug 'terryma/vim-multiple-cursors'  "-多个光标操作
+Plug 'vim-scripts/sessionman.vim'  "让vim有session
+Plug 'vim-airline/vim-airline'       "-漂亮的状态栏
+Plug 'vim-airline/vim-airline-themes'       "-漂亮的状态栏主题
+
+Plug 'powerline/fonts'         "自体
+"Plug 'bling/vim-bufferline'    "状态栏现实缓冲区
+Plug 'easymotion/vim-easymotion'  "vim更好的移动方式
+Plug 'mbbill/undotree'           "显示回退的树桩图
+Plug 'flazz/vim-colorschemes'     "可以选择配色
+Plug 'mhinz/vim-signify'         
+"Plug 'tpope/vim-abolish.git'
+Plug 'osyo-manga/vim-over'     "将vim的命令行改成shell类似的
+Plug 'gcmt/wildfire.vim'       "要括号外的括号进攻
+Plug 'altercation/vim-colors-solarized'
+"Plug 'vim-scripts/vim-auto-save'
+Plug 'Shougo/denite.nvim'
+
+"-------------  code ---------------- 
+Plug 'roxma/nvim-completion-manager' "补全件
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+"-------------  python plugin---------------- 
+Plug 'davidhalter/jedi-vim', {'for': 'python'}
 "-------------  rust plugin---------------- 
-Plugin 'racer-rust/vim-racer'
-Plugin 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
+Plug 'rust-lang/rust.vim'
+Plug 'roxma/nvim-cm-racer'
+"Plug 'wsdjeg/FlyGrep.vim'
 
-
-call vundle#end()
+call plug#end()
+"call vundle#end()
 
 filetype on "启用文件类型侦测
 filetype plugin on  "针对不同的文件类型加载对应的插件
@@ -132,11 +84,11 @@ set foldlevel=99 "设置默认不折叠
 set hlsearch "设置搜索高亮
 set ignorecase
 set nowrap "设置不折叠行
-set history=1000
+"set history=1000
 
-set backspace=2 "设置退格键可用
+"set backspace=2 "设置退格键可用
 
-set hidden
+"set hidden
 set scroll=10
 
 "------------- 补全设置 ---------------- 
@@ -148,10 +100,8 @@ set mouse=a "启用鼠标
 set mousehide "在打字的时候隐藏鼠标j"
 
 "------------- 编码设置 ----------------" 
-set encoding=utf-8 "设置内部编码
-set fileencoding=utf-8
-"set fileencodings
-
+"set encoding=utf-8 "设置内部编码
+"set fileencoding=utf-8
 
 "----------基本设置-----------------
 set background=dark         " Assume a dark background
@@ -169,8 +119,8 @@ function! ToggleBG()
 endfunction
 noremap <leader>bg :call ToggleBG()<CR>
 syntax enable
-colorscheme molokai
-"colorscheme solarized
+"colorscheme molokai
+colorscheme solarized
 "colorscheme desert
 
 let g:solarized_termcolors=256
@@ -185,7 +135,6 @@ inoremap <c-d> <esc>ddi
 nnoremap <leader>a :tabp<cr>
 nnoremap <leader>d :tabn<cr>
 nnoremap <leader>w :tabc<cr>
-inoremap jk <esc>
 
 "常用拼写纠正
 iabbrev adn and
@@ -235,6 +184,15 @@ map zh zH
 nnoremap <Space> :
 vnoremap <Space> :
 
+inoremap jk <ESC>
+"inoremap <ESC> <nop>
+
+"todo paste when insert
+inoremap <c-v> <ESC>pi
+
+inoremap <c-f> <right>
+inoremap <c-e> <end>
+inoremap <c-a> <home>
 
 if maparg('<C-l>', 'n') ==# '' | nnoremap <silent> <C-l> :nohlsearch<CR><C-l> | endif
 
@@ -250,7 +208,22 @@ if maparg('<C-l>', 'n') ==# '' | nnoremap <silent> <C-l> :nohlsearch<CR><C-l> | 
 "set statusline+=%L
 
 "----------unite.vim配置------------
-nnoremap <C-h> :Unite buffer file file_rec<CR>
+nnoremap <C-h> :Denite buffer file file_rec -mode=normal<CR>
+
+
+"call denite#custom#map(
+      "\ 'insert',
+      "\ '<Down>',
+      "\ '<denite:move_to_next_line>',
+      "\ 'noremap'
+      "\)
+
+"call denite#custom#map(
+      "\ 'insert',
+      "\ '<Up>',
+      "\ '<denite:move_to_previous_line>',
+      "\ 'noremap'
+      "\)
 
 "----------rust配置-----------------
 ""开启rust的自动reformat的功能
@@ -258,12 +231,9 @@ let g:rustfmt_autosave = 0
 ""手动补全和定义跳转
 
 """ 在normal 模式下, 敲 <leader>jd 跳转到定义或声明(支持跨文件)
-nnoremap <leader>jk :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"nnoremap <leader>jk :YcmCompleter GoToDefinitionElseDeclaration<CR>
 """ 在 Insert 模式下, 敲 <leader>; 补全
 inoremap <leader>; <C-x><C-o>
-"inoremap <m-p> <c-p>
-"inoremap <m-n> <c-n>
-
 nnoremap <leader>h <C-w>h
 nnoremap <leader>l <C-w>l
 nnoremap <leader>j <C-w>j
@@ -289,40 +259,39 @@ nnoremap <leader><F12> :PluginInstall!<CR>
 
 
 "----------rainbow配置------------------------
-let g:rainbow_active = 1
+"let g:rainbow_active = 1
 nnoremap <leader>c( :RainbowToggle<CR>
 
 
 "------------- airline配置 ---------------- 
 let g:airline_powerline_fonts = 1 
 
-let g:airline_theme = 'luna'
+let g:airline_theme = 'bubblegum'
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#whitespace#symbol = '!'
-let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#bufferline#enabled = 0
+let g:airline#extensions#tabline#fnamemod = ':t'
 
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
+"if !exists('g:airline_symbols')
+    "let g:airline_symbols = {}
+"endif
 
   " unicode symbols
-let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.maxlinenr = '☰'
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.spell = 'Ꞩ'
-let g:airline_symbols.notexists = '∄'
-let g:airline_symbols.whitespace = 'Ξ'
+"let g:airline_symbols.crypt = '🔒'
+"let g:airline_symbols.maxlinenr = '☰'
+"let g:airline_symbols.maxlinenr = ''
+"let g:airline_symbols.branch = '⎇'
+"let g:airline_symbols.paste = 'ρ'
+"let g:airline_symbols.spell = 'Ꞩ'
+"let g:airline_symbols.notexists = '∄'
+"let g:airline_symbols.whitespace = 'Ξ'
 
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
+let g:airline_right_alt_sep = ''
+"let g:airline_symbols.branch = ''
+"let g:airline_symbols.readonly = ''
+"let g:airline_symbols.linenr = ''
 
 "------------- sessionman工作区配置 ---------------- 
 nmap <leader>sl :SessionList<CR>
@@ -350,34 +319,66 @@ endif
 "let g:auto_save = 1
 
 "-------------  python mode 设置---------------- 
-augroup python_mode
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-augroup end
+"augroup python_mode
+    "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+"augroup end
 
-let g:pymode_lint_checkers = ['pyflakes']
-let g:pymode_trim_whitespaces = 0
-let g:pymode_options = 0
-let g:pymode_rope = 0
+"let g:pymode_lint_checkers = ['pyflakes']
+"let g:pymode_trim_whitespaces = 0
+"let g:pymode_options = 0
+"let g:pymode_rope = 0
 
-function! ENJIE(word)
-    let key = 'grep -n -r '.a:word." ".getcwd()
-    execute key
-endfunction
+"function! ENJIE(word)
+    "let key = 'grep -n -r '.a:word." ".getcwd()
+    "execute key
+"endfunction
 
 function! SearchWorkspace(word)
     let key = 'vimgrep /'.a:word.'/gj **/*.*'
     execute key
 endfunction
 
+"-------------  python mode ---------------- 
+"let g:jedi#goto_command = "<leader>d"
+"let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = "gd"
+let g:jedi#documentation_command = "K"
+"let g:jedi#usages_command = "<leader>n"
+"let g:jedi#completions_command = "<C-Space>"
+"let g:jedi#rename_command = "<leader>r"
+
 
 "-------------  rust mode  ---------------- 
 let g:racer_experimental_completer = 1
-
+"racer complete
 au FileType rust nmap gd <Plug>(rust-def)
 au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
 au FileType rust nmap <leader>gd <Plug>(rust-doc)
+"languageclient complete
+au FileType rust nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+au FileType rust nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+au FileType rust nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+"-------------  language server  ---------------- 
 
+set hidden
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ }
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+"let g:LanguageClient_changeThrottle = 0.5
+
+"------------- python3 plugin avaiable  ---------------- 
+"in windows
+"let g:python3_host_prog='E:\software\python36\python3.exe'
+
+
+"-------------  completion setting ---------------- 
+"use <enter> chose complete
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "-------------  全局搜索  ---------------- 
-command! -nargs=? Say call ENJIE('<args>')
+"command! -nargs=? Say call ENJIE('<args>')
 command! -nargs=1 Fuck call SearchWorkspace('<args>')
