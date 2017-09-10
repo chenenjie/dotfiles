@@ -51,6 +51,7 @@ Plug 'Shougo/denite.nvim'
 "-------------  code ---------------- 
 Plug 'roxma/nvim-completion-manager' "补全件
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'vim-syntastic/syntastic'
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 "-------------  python plugin---------------- 
@@ -270,6 +271,7 @@ let g:airline_theme = 'bubblegum'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#bufferline#enabled = 0
 let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#syntastic#enabled = 1
 
 "if !exists('g:airline_symbols')
     "let g:airline_symbols = {}
@@ -356,9 +358,9 @@ au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
 au FileType rust nmap <leader>gd <Plug>(rust-doc)
 "languageclient complete
-au FileType rust nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-au FileType rust nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-au FileType rust nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+"au FileType rust nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+"au FileType rust nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+"au FileType rust nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 "-------------  language server  ---------------- 
 
 set hidden
@@ -373,6 +375,13 @@ let g:LanguageClient_autoStart = 1
 "------------- python3 plugin avaiable  ---------------- 
 "in windows
 "let g:python3_host_prog='E:\software\python36\python3.exe'
+
+
+"-------------  syntastic setting ---------------- 
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 
 "-------------  completion setting ---------------- 
