@@ -1,0 +1,57 @@
+{
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#005f5f",
+        "statusBar.noFolderBackground": "#005f5f",
+        "statusBar.debuggingBackground": "#005f5f"
+    },
+    "workbench.colorTheme": "Hopscotch (TextMate Theme)",
+
+    //vim配置
+    "vim.leader": ",",
+    "vim.easymotion": true,
+    "vim.insertModeKeyBindingsNonRecursive": [
+        {
+            "before":["j","k"],
+            "after":["<esc>"]
+        }
+    ],    
+    "vim.otherModesKeyBindingsNonRecursive": [
+        {
+
+            "before": ["<space>"],
+            "after": [":"]
+        },
+        {
+            "before": ["u"],
+            "after":[""],
+            "commands": [
+                {
+                    "command": "undo",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": ["<C-r>"],
+            "after":[""],
+            "commands": [
+                {
+                    "command": "redo",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": [">"],
+            "after":[">","g","v"],
+        },
+        {
+            "before": ["<"],
+            "after":["<","g","v"],
+        }
+    ],
+    "vim.useSystemClipboard": true,
+
+    "rust.goto_def_racer_fallback": true,
+    "workbench.editor.showTabs": true,
+}
